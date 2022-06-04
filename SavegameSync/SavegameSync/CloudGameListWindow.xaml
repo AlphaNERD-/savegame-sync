@@ -7,13 +7,35 @@
         mc:Ignorable="d"
         Title="CloudGameListWindow" Height="400.84" Width="680.46">
     <Grid>
-        <ListBox x:Name="cloudGameListBox" HorizontalAlignment="Left" Height="230" Margin="48,48,0,0" VerticalAlignment="Top" Width="274" SelectionChanged="cloudGameListBox_SelectionChanged"/>
-        <TextBlock x:Name="cloudGameTextBlock" HorizontalAlignment="Left" Height="20" Margin="48,23,0,0" TextWrapping="Wrap" Text="Games in cloud" VerticalAlignment="Top" Width="82"/>
-        <Button x:Name="deleteGameButton" Content="Delete game from cloud storage" HorizontalAlignment="Left" Margin="48,283,0,0" VerticalAlignment="Top" Width="178" Click="deleteGameButton_Click"/>
-        <Button x:Name="backButton" Content="Back" HorizontalAlignment="Left" Margin="569,10,0,0" VerticalAlignment="Top" Width="75" Click="backButton_Click"/>
-        <local:SavegameListControl x:Name="savegameListControl" HorizontalAlignment="Left" Margin="366,23,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="deleteSaveButton" Content="Delete save" HorizontalAlignment="Left" Margin="494,283,0,0" VerticalAlignment="Top" Width="75" Click="deleteSaveButton_Click"/>
-        <Button x:Name="downloadSaveButton" Content="Download save" HorizontalAlignment="Left" Margin="366,283,0,0" VerticalAlignment="Top" Width="97" Click="downloadSaveButton_Click"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="24"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="backButton" Content="Back" HorizontalAlignment="Right" VerticalAlignment="Center" Width="75" Margin="2" Click="backButton_Click" Grid.Column="1"/>
+        <GroupBox Header="Cloud games" HorizontalAlignment="Stretch" Height="Auto" Width="Auto" Margin="4,4,2,4" Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="24"/>
+                </Grid.RowDefinitions>
+                <ListBox x:Name="cloudGameListBox" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" SelectionChanged="cloudGameListBox_SelectionChanged" Margin="2"/>
+                <Button x:Name="deleteGameButton" Content="Delete game from cloud storage" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2,0,0,0" Width="178" Click="deleteGameButton_Click" Grid.Row="1"/>
+            </Grid>
+        </GroupBox>
+        <Grid Grid.Column="1" Margin="2,4,4,4" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="24"/>
+            </Grid.RowDefinitions>
+            <local:SavegameListControl x:Name="savegameListControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Button x:Name="deleteSaveButton" Content="Delete save" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Click="deleteSaveButton_Click"/>
+                <Button x:Name="downloadSaveButton" Content="Download save" HorizontalAlignment="Left" VerticalAlignment="Center" Width="97" Margin="2,0,0,0" Click="downloadSaveButton_Click"/>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Window>

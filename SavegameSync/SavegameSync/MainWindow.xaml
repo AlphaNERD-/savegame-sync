@@ -6,24 +6,53 @@
         xmlns:local="clr-namespace:SavegameSync"
         mc:Ignorable="d"
         Title="MainWindow" Height="453.109" Width="823.866">
-    <Grid Margin="0,0,23,0">
-        <ListBox x:Name="localGameListBox" HorizontalAlignment="Left" Height="146" Margin="36,74,0,0" VerticalAlignment="Top" Width="293" SelectionChanged="localGameListBox_SelectionChanged"/>
-        <Button x:Name="copyToCloudButton" Content="Upload local save to cloud" HorizontalAlignment="Left" Height="23" Margin="35,225,0,0" VerticalAlignment="Top" Width="147" Click="copyToCloudButton_Click"/>
-        <Button x:Name="copyFromCloudButton" Content="Download selected save from cloud" HorizontalAlignment="Left" Height="23" Margin="35,253,0,0" VerticalAlignment="Top" Width="195" Click="copyFromCloudButton_Click"/>
-        <Button x:Name="addGameButton" Content="Add game" HorizontalAlignment="Left" Height="23" Margin="184,45,0,0" VerticalAlignment="Top" Width="65" Click="addGameButton_Click"/>
-        <TextBlock x:Name="localGameTextBlock" HorizontalAlignment="Left" Height="20" Margin="36,49,0,0" TextWrapping="Wrap" Text="Local games" VerticalAlignment="Top" Width="82"/>
-        <TextBlock x:Name="statusLabelTextBlock" HorizontalAlignment="Left" Margin="33,305,0,0" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="statusTextBlock" HorizontalAlignment="Left" Margin="80,305,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="713"/>
-        <Button x:Name="deleteCloudSaveButton" Content="Delete cloud save" HorizontalAlignment="Left" Margin="375,277,0,0" VerticalAlignment="Top" Width="105" Click="deleteCloudSaveButton_Click"/>
-        <Button x:Name="debugButton" Content="Debug" HorizontalAlignment="Left" Margin="699,105,0,0" VerticalAlignment="Top" Width="75" Click="debugButton_Click" Visibility="Hidden"/>
-        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="34,326,0,0" TextWrapping="Wrap" Text="Timestamp of local save files for selected game:" VerticalAlignment="Top" Width="259"/>
-        <TextBlock x:Name="localSaveTimestampTextBlock" HorizontalAlignment="Left" Margin="298,326,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="495"/>
-        <Button x:Name="cloudGameListButton" Content="View games in cloud storage" HorizontalAlignment="Left" Margin="614,55,0,0" VerticalAlignment="Top" Width="160" Click="cloudGameListButton_Click"/>
-        <Button x:Name="deleteLocalGameButton" Content="Delete game" HorizontalAlignment="Left" Margin="254,45,0,0" VerticalAlignment="Top" Width="75" Height="23" Click="deleteLocalGameButton_Click"/>
-        <Button x:Name="orphanedSaveButton" Content="Repair cloud files" HorizontalAlignment="Left" Margin="676,80,0,0" VerticalAlignment="Top" Width="98" Click="orphanedSaveButton_Click"/>
-        <local:SavegameListControl x:Name="savegameListControl" HorizontalAlignment="Left" Margin="375,17,0,0" VerticalAlignment="Top"/>
-        <TextBlock x:Name="installDirLabelTextBlock" HorizontalAlignment="Left" Margin="35,347,0,0" TextWrapping="Wrap" Text="Install dir of selected game:" VerticalAlignment="Top"/>
-        <TextBlock x:Name="installDirTextBlock" HorizontalAlignment="Left" Margin="194,347,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="599" Height="59"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <GroupBox Header="Local games" HorizontalAlignment="Stretch" Height="Auto" Width="Auto" Margin="4,4,2,4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <ListBox x:Name="localGameListBox" HorizontalAlignment="Stretch" Height="Auto" Margin="2" VerticalAlignment="Stretch" Width="Auto" SelectionChanged="localGameListBox_SelectionChanged"/>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <Button x:Name="addGameButton" Content="Add game" HorizontalAlignment="Left" Height="20" Margin="2,0,0,0" VerticalAlignment="Center" Width="65" Click="addGameButton_Click"/>
+                    <Button x:Name="deleteLocalGameButton" Content="Delete game" HorizontalAlignment="Left" VerticalAlignment="Center" Width="75" Height="20" Margin="2,0,0,0" Click="deleteLocalGameButton_Click"/>
+                    <Button x:Name="copyToCloudButton" Content="Upload to cloud" HorizontalAlignment="Right" Height="20" Margin="2,0,0,0" VerticalAlignment="Center" Click="copyToCloudButton_Click" Grid.Row="1"/>
+                    <Button x:Name="copyFromCloudButton" Content="Download from cloud" HorizontalAlignment="Right" Height="20" Margin="2,0,0,0" VerticalAlignment="Center" Click="copyFromCloudButton_Click" Grid.Row="1"/>
+                </StackPanel>
+                <StackPanel Grid.Row="2">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="statusLabelTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Status:" VerticalAlignment="Top" Margin="2,2,0,2"/>
+                        <TextBlock x:Name="statusTextBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="" Margin="2" VerticalAlignment="Top" Width="Auto"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="textBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Timestamp:" VerticalAlignment="Top" Width="Auto" Margin="2,2,0,2"/>
+                        <TextBlock x:Name="localSaveTimestampTextBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Top" Width="Auto" Margin="2"/>
+                    </StackPanel>
+                    <TextBlock x:Name="installDirLabelTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Savegame directory:" VerticalAlignment="Top" Margin="2,0,0,2"/>
+                    <TextBlock x:Name="installDirTextBlock" HorizontalAlignment="Stretch" TextWrapping="Wrap" VerticalAlignment="Stretch" Margin="2" Width="Auto" Height="Auto" Grid.Row="2"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+        <Grid Height="Auto" Width="Auto" Margin="2,4,4,4" Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="24"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <local:SavegameListControl x:Name="savegameListControl" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2"/>
+            <StackPanel Orientation="Horizontal" Grid.Row="1">
+                <Button x:Name="orphanedSaveButton" Content="Repair cloud files" HorizontalAlignment="Left" VerticalAlignment="Center" Width="98" Margin="2,0,0,0" Click="orphanedSaveButton_Click"/>
+                <Button x:Name="deleteCloudSaveButton" Content="Delete cloud save" HorizontalAlignment="Left" VerticalAlignment="Center" Width="105" Margin="2,0,0,0" Click="deleteCloudSaveButton_Click"/>
+                <Button x:Name="cloudGameListButton" Content="View cloud saves" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Margin="2,0,0,0" Click="cloudGameListButton_Click"/>
+            </StackPanel>
+            <Button x:Name="debugButton" Content="Debug" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="debugButton_Click" Visibility="Hidden"/>
+        </Grid>
     </Grid>
 </Window>

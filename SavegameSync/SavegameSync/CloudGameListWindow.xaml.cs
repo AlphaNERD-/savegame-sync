@@ -104,12 +104,10 @@ namespace SavegameSync
             }
             string gameName = cloudGameListBox.SelectedItem.ToString();
 
-            string message = "Delete all save files stored in the cloud for "
-                + gameName + "?";
-            ConfirmationDialog dialog = new ConfirmationDialog(message);
-            bool? result = dialog.ShowDialog();
+            string message = "Are you sure you want to delete ALL save files for "
+                + gameName + " from the cloud?";
 
-            if (result.HasValue && result.GetValueOrDefault())
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
                 StartOperation();
                 await SavegameSyncUtils.RunWithChecks(async () =>
@@ -137,13 +135,18 @@ namespace SavegameSync
                 return;
             }
 
-            StartOperation();
-            await SavegameSyncUtils.RunWithChecks(async () =>
+            string message = "Are you sure you want to delete the save file from the cloud?";
+
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
-                await savegameSync.DeleteSave(gameName, saveIndex);
-            });
-            await savegameListControl.SetGameAndUpdateAsync(gameName);
-            FinishOperation();
+                StartOperation();
+                await SavegameSyncUtils.RunWithChecks(async () =>
+                {
+                    await savegameSync.DeleteSave(gameName, saveIndex);
+                });
+                await savegameListControl.SetGameAndUpdateAsync(gameName);
+                FinishOperation();
+            }
         }
 
         private async void cloudGameListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -178,10 +181,8 @@ namespace SavegameSync
             string message = "Download selected save? (The downloaded zip file will be downloaded"
                 + " into the directory in which this app was launched and will be named \""
                 + downloadedFileName + ".\")";
-            ConfirmationDialog dialog = new ConfirmationDialog(message);
-            bool? result = dialog.ShowDialog();
 
-            if (result.HasValue && result.GetValueOrDefault())
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 StartOperation();
                 await SavegameSyncUtils.RunWithChecks(async () =>

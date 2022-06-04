@@ -5,10 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SavegameSync"
         mc:Ignorable="d"
-        Title="AddGameDialog" Height="300" Width="300">
+        Title="Select game" Height="300" Width="300">
     <Grid>
-        <Button Margin="43,222,182,18" Content="OK" Click="OK_Button_Click" IsDefault="True"/>
-        <Button Margin="164,222,61,18" Content="Cancel" Click="Cancel_Button_Click" IsCancel="True"/>
-        <ListBox x:Name="listBox" HorizontalAlignment="Left" Height="161" Margin="0,35,0,0" VerticalAlignment="Top" Width="292"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="28"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListBox x:Name="listBox" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Button Content="OK" Click="OK_Button_Click" IsDefault="True" Grid.Row="1" Margin="4"/>
+        <Button Content="Cancel" Click="Cancel_Button_Click" IsCancel="True" Grid.Row="1" Margin="4" Grid.Column="1"/>
     </Grid>
 </Window>

@@ -24,22 +24,29 @@ namespace SavegameSync
         {
             base.OnInitialized(e);
 
-            localGameListBox.Items.Add("Loading...");
-
-            StartOperation("Logging in...");
-            savegameSync = SavegameSyncEngine.GetInstance();
-            await savegameSync.Init();
-            if (!savegameSync.IsLoggedIn())
+            try
             {
-                await savegameSync.Login();
+                localGameListBox.Items.Add("Loading...");
+
+                StartOperation("Logging in...");
+                savegameSync = SavegameSyncEngine.GetInstance();
+                await savegameSync.Init();
+                if (!savegameSync.IsLoggedIn())
+                {
+                    await savegameSync.Login();
+                }
+                FinishOperation();
+
+                savegameListControl.Initialize();
+
+                StartOperation("Updating game lists...");
+                UpdateLocalGameList();
+                FinishOperation();
             }
-            FinishOperation();
-
-            savegameListControl.Initialize();
-
-            StartOperation("Updating game lists...");
-            UpdateLocalGameList();
-            FinishOperation();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error while loading SavegameSync: " + ex.Message, "", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UpdateLocalGameList()
@@ -85,16 +92,23 @@ namespace SavegameSync
 
         private async void localGameListBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            if (e.AddedItems.Count == 0)
+            try
             {
-                return;
+                if (e.AddedItems.Count == 0)
+                {
+                    return;
+                }
+                Debug.Assert(e.AddedItems.Count == 1);
+
+                string gameName = e.AddedItems[0].ToString();
+
+                await savegameListControl.SetGameAndUpdateAsync(gameName);
+                UpdateLocalGameInfoDisplays(gameName);
             }
-            Debug.Assert(e.AddedItems.Count == 1);
-
-            string gameName = e.AddedItems[0].ToString();
-
-            await savegameListControl.SetGameAndUpdateAsync(gameName);
-            UpdateLocalGameInfoDisplays(gameName);
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error while updating game: " + ex.Message,"", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void UpdateLocalGameInfoDisplays(string selectedGameName)
@@ -259,9 +273,8 @@ namespace SavegameSync
                                        + "this game will remain in the cloud, but you'll have to "
                                        + "add this game to the local game list again to download "
                                        + "or upload saves.)";
-            ConfirmationDialog dialog = new ConfirmationDialog(message);
-            bool? result = dialog.ShowDialog();
-            if (result.HasValue && result.GetValueOrDefault())
+
+            if (System.Windows.MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
                 StartOperation("Deleting game from local game list...");
                 await SavegameSyncUtils.RunWithChecks(async () =>

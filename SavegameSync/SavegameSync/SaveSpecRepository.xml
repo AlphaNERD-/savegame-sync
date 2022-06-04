@@ -43,4 +43,112 @@
     <name>Warcraft III Reforged</name>
     <path>BattleNet</path>
   </saveSpec>
+  <saveSpec>
+    <!--
+        Theme Park World stores it's save files within the install directory.
+		If you install Theme Park World in the Program Files directory on Vista
+		and later, this means that the files end up in 
+		C:\Users\<username>\AppData\Local\VirtualStore\Program Files (x86)\Bullfrog\Theme Park World\save.
+		If
+    -->
+    <name>Theme Park World</name>
+    <path>users</path>
+	<path>online</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        We could exclusively use the Campaigns directory for Rollercoaster Tycoon 3
+		but to make sure that nothing gets lost because some files are missing
+		we will use the whole directory. You can find it in C:\Users\<username>\Documents\RCT3
+    -->
+    <name>Rollercoaster Tycoon 3</name>
+    <path>.</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        SimCity 4 stores its save files in C:\Users\<username>\Documents\SimCity 4
+		This also applies to the Deluxe version and SimCity 4 with Rush Hour expansion installed
+		afterwards.
+		If you have Rush Hour, then make sure that all systems have the Rush Hour expansion pack installed.
+    -->
+    <name>SimCity 4</name>
+    <path>Regions</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        Need for Speed Most Wanted stores its save files in C:\Users\<username>\Documents\NFS Most Wanted
+    -->
+    <name>Need for Speed Most Wanted</name>
+    <path>.</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        Need for Speed Underground 2 stores its save files in C:\Users\<username>\AppData\Local\NFS Most Wanted
+    -->
+    <name>Need for Speed Underground 2</name>
+    <path>.</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        Tony Hawk's American Wasteland stores save files in its install directory  
+		(e.g. C:\Program Files (x86)\Aspyr Media, Inc\THAW\Game\save).
+		If you install the game in the Program Files directory under Vista and later your save files end up in
+		C:\Users\<username>\AppData\Local\VirtualStore\Program Files (x86)\Aspyr Media, Inc\THAW\Game\save
+    -->
+    <name>Tony Hawk's American Wasteland</name>
+    <path>Game\save</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        Tony Hawk's Underground 2 stores save files in its install directory  
+		(e.g. C:\Program Files (x86)\Activision\Tony Hawk's Underground 2\Game\save).
+		If you install the game in the Program Files directory under Vista and later your save files end up in
+		C:\Users\<username>\AppData\Local\VirtualStore\Program Files (x86)\Activision\Tony Hawk's Underground 2\Game\save
+    -->
+    <name>Tony Hawk's Underground 2</name>
+    <path>Game\save</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        The Sims 1 stores save files in its install directory  
+		(e.g. C:\Program Files (x86)\Maxis\The Sims\UserData*).
+		If you install the game in the Program Files directory under Vista and later your save files end up in
+		C:\Users\<username>\AppData\Local\VirtualStore\Program Files (x86)\Maxis\The Sims\UserData*
+		Also make sure that all systems have the same expansion packs installed.
+    -->
+    <name>The Sims 1</name>
+    <path>UserData</path>
+	<path>UserData2</path>
+	<path>UserData3</path>
+	<path>UserData4</path>
+	<path>UserData5</path>
+	<path>UserData6</path>
+	<path>UserData7</path>
+	<path>UserData8</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        The Sims 2 stores its save files in C:\Users\<username>\Documents\EA Games\The Sims 2.
+		To keep the amount of data to be synced at bay, we will only sync the Neighborhoods directory.
+		If you use mods, i recommend to copy them manually unless you have a fast connection.
+		If you do have a fast connection, then change the text in <path> to ".".
+		Also make sure that all systems have the same expansion packs installed.
+    -->
+    <name>The Sims 2</name>
+    <path>Neighborhoods</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        The Sims 3 stores its save files in C:\Users\<username>\Documents\Electronic Arts\The Sims 3.
+		To keep the amount of data to be synced at bay, we will only sync the Saves directory.
+		If you use mods, i recommend to copy them manually unless you have a fast connection AND
+		bought additional storage on Google Drive (the default storage size is 15 GB).
+		If you do have a fast connection, then change the text in <path> to "."
+		You could also not be lazy like i am and include important directories. Just make sure to skip
+		DCCache and DCBackup.
+		Also make sure that all systems have the same expansion packs installed.
+    -->
+    <name>The Sims 3</name>
+    <path>Saves</path>
+  </saveSpec>
 </saveSpecRepository>

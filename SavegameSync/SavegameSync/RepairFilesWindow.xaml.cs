@@ -167,9 +167,8 @@ namespace SavegameSync
 
             string message = "Download orphaned save file? (The zip file will be downloaded into"
                            + " the directory in which this app was launched.)";
-            ConfirmationDialog dialog = new ConfirmationDialog(message);
-            bool? result = dialog.ShowDialog();
-            if (result.HasValue && result.GetValueOrDefault())
+
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 StartOperation();
                 await SavegameSyncUtils.RunWithChecks(async () =>
@@ -199,9 +198,7 @@ namespace SavegameSync
                            + " named " + directoryName + " located in the directory in which this"
                            + " app was launched.";
 
-            ConfirmationDialog dialog = new ConfirmationDialog(message);
-            bool? result = dialog.ShowDialog();
-            if (result.HasValue && result.Value)
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
                 StartOperation();
                 await SavegameSyncUtils.RunWithChecks(async () =>
@@ -215,18 +212,16 @@ namespace SavegameSync
 
         private async void deleteAllFilesButton_Click(object sender, RoutedEventArgs e)
         {
-            string message = "Delete all files stored in the cloud?";
-            ConfirmationDialog dialog = new ConfirmationDialog(message);
-            bool? result = dialog.ShowDialog();
-            if (!result.HasValue || !result.Value)
+            string message = "Are you sure you want all files stored in the cloud?";
+
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
                 return;
             }
 
-            string message2 = "Are you sure you want to delete all files? (All your cloud saves will be lost!)";
-            ConfirmationDialog dialog2 = new ConfirmationDialog(message2);
-            bool? result2 = dialog2.ShowDialog();
-            if (!result2.HasValue || !result2.Value)
+            string message2 = "Are you REALLY sure you want all files stored in the cloud? (All your cloud saves will be lost!)";
+
+            if (MessageBox.Show(message, "", MessageBoxButton.YesNo, MessageBoxImage.Exclamation) == MessageBoxResult.Yes)
             {
                 return;
             }
