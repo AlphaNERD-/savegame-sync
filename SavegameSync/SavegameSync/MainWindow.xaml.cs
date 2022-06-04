@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.WindowsAPICodePack.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -66,11 +67,13 @@ namespace SavegameSync
 
             // Apparently I have to use either Windows Forms or a separate
             // NuGet package to do this...
-            FolderBrowserDialog dialog = new FolderBrowserDialog();
-            DialogResult result = dialog.ShowDialog();
-            if (result == System.Windows.Forms.DialogResult.OK)
+            CommonOpenFileDialog commonOpenFile = new CommonOpenFileDialog();
+            commonOpenFile.IsFolderPicker = true;
+            
+            CommonFileDialogResult result = commonOpenFile.ShowDialog();
+            if (result == CommonFileDialogResult.Ok)
             {
-                path = dialog.SelectedPath;
+                path = commonOpenFile.FileName;
                 Debug.WriteLine("Selected path: " + path);
 
                 AddGameDialog addGameDialog = new AddGameDialog();
