@@ -371,7 +371,7 @@ namespace SavegameSync
                 string destPath = System.IO.Path.Combine(destDir, subPath);
                 if (Directory.Exists(originalPath))
                 {
-                    FileUtils.CopyDirectory(originalPath, destPath);
+                    FileUtils.CopyDirectory(originalPath, destPath, saveSpec.FileExtensions);
                 }
                 else if (File.Exists(originalPath))
                 {
@@ -395,7 +395,7 @@ namespace SavegameSync
                 string fullSubPath = Path.Combine(installDir, subPath);
                 if (Directory.Exists(fullSubPath))
                 {
-                    subPathTimestamp = FileUtils.GetLatestFileWriteTime(fullSubPath);
+                    subPathTimestamp = FileUtils.GetLatestFileWriteTime(fullSubPath, saveSpec.FileExtensions);
                 }
                 else if (File.Exists(fullSubPath))
                 {
@@ -428,7 +428,7 @@ namespace SavegameSync
                 FileUtils.DeleteIfExists(destPath);
                 if (Directory.Exists(sourcePath))
                 {
-                    FileUtils.CopyDirectory(sourcePath, destPath);
+                    FileUtils.CopyDirectory(sourcePath, destPath, saveSpec.FileExtensions);
                 }
                 else if (File.Exists(sourcePath))
                 {

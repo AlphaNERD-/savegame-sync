@@ -16,10 +16,16 @@ namespace SavegameSync
         /// </summary>
         public string[] SavePaths { get; private set; }
 
-        public SaveSpec(string gameName, string[] savePaths)
+        /// <summary>
+        /// A list of allowed file extensions within the specified directories
+        /// </summary>
+        public string[] FileExtensions { get; private set; }
+
+        public SaveSpec(string gameName, string[] savePaths, string[] fileExtensions)
         {
             GameName = gameName;
             SavePaths = savePaths;
+            FileExtensions = fileExtensions;
         }
 
     }

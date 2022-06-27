@@ -74,6 +74,7 @@ namespace SavegameSync
         {
             string gameName = null;
             List<string> paths = new List<string>();
+            List<string> extensions = new List<string>();
             while (reader.Read())
             {
                 if (reader.NodeType == XmlNodeType.Element)
@@ -86,13 +87,17 @@ namespace SavegameSync
                     {
                         paths.Add(reader.ReadElementContentAsString());
                     }
+                    else if (reader.Name == "extension")
+                    {
+                        extensions.Add(reader.ReadElementContentAsString());
+                    }
                 }
             }
             if (gameName == null || paths.Count == 0)
             {
                 throw new SaveSpecRepositoryParseException();
             }
-            return new SaveSpec(gameName, paths.ToArray());
+            return new SaveSpec(gameName, paths.ToArray(), extensions.Count > 0 ? extensions.ToArray() : null);
         }
     }
 }

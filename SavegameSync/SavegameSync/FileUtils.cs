@@ -9,7 +9,7 @@ namespace SavegameSync
         /*
          * Based on this MSDN example: https://docs.microsoft.com/en-us/dotnet/standard/io/how-to-copy-directories.
          */
-        public static void CopyDirectory(string originalDir, string destDir)
+        public static void CopyDirectory(string originalDir, string destDir, string[] filter = null)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(originalDir);
             if (!Directory.Exists(destDir))
@@ -17,7 +17,27 @@ namespace SavegameSync
                 Directory.CreateDirectory(destDir);
             }
 
-            FileInfo[] files = dirInfo.GetFiles();
+            string searchPattern = "";
+            if (filter != null)
+            {
+                foreach (string s in filter)
+                {
+                    if (s.StartsWith("."))
+                        searchPattern += "*" + s;
+                    else
+                        searchPattern += s;
+
+                    searchPattern += "|";
+                }
+
+                searchPattern = searchPattern.Trim('|');
+            }
+            else
+            {
+                searchPattern = "*.*";
+            }
+
+            FileInfo[] files = dirInfo.GetFiles(searchPattern);
             foreach (FileInfo file in files)
             {
                 string destFilePath = Path.Combine(destDir, file.Name);
@@ -28,19 +48,39 @@ namespace SavegameSync
             foreach (DirectoryInfo subdir in subdirs)
             {
                 string destSubdirPath = Path.Combine(destDir, subdir.Name);
-                CopyDirectory(subdir.FullName, destSubdirPath);
+                CopyDirectory(subdir.FullName, destSubdirPath, filter);
             }
         }
 
         /// <summary>
         /// Get the latest LastWriteTime of any file in the given directory or its subdirectories.
         /// </summary>
-        public static DateTime GetLatestFileWriteTime(string dir)
+        public static DateTime GetLatestFileWriteTime(string dir, string[] filter = null)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(dir);
             DateTime latestFileWriteTime = new DateTime(1900, 1, 1);
 
-            FileInfo[] files = dirInfo.GetFiles();
+            string searchPattern = "";
+            if (filter != null)
+            {
+                foreach (string s in filter)
+                {
+                    if (s.StartsWith("."))
+                        searchPattern += "*" + s;
+                    else
+                        searchPattern += s;
+
+                    searchPattern += "|";
+                }
+
+                searchPattern = searchPattern.Trim('|');
+            }
+            else
+            {
+                searchPattern = "*.*";
+            }
+
+            FileInfo[] files = dirInfo.GetFiles(searchPattern);
             foreach (FileInfo file in files)
             {
                 DateTime curDateTime = file.LastWriteTimeUtc;
@@ -53,7 +93,7 @@ namespace SavegameSync
             DirectoryInfo[] subDirs = dirInfo.GetDirectories();
             foreach (DirectoryInfo subDir in subDirs)
             {
-                DateTime curDateTime = GetLatestFileWriteTime(subDir.FullName);
+                DateTime curDateTime = GetLatestFileWriteTime(subDir.FullName, filter);
                 if (curDateTime > latestFileWriteTime)
                 {
                     latestFileWriteTime = curDateTime;

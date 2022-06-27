@@ -151,4 +151,19 @@
     <name>The Sims 3</name>
     <path>Saves</path>
   </saveSpec>
+  <saveSpec>
+    <!--
+        OpenGOAL Jak and Daxter stores its save files in C:\Users\<user>\OpenGOAL\jak1\saves
+    -->
+    <name>Jak and Daxter (OpenGOAL)</name>
+    <path>saves</path>
+  </saveSpec>
+  <saveSpec>
+    <!--
+        DevilutionX Diablo stores its save files in C:\Users\<user>\AppData\Roaming\diasurgical
+    -->
+    <name>Diablo (DevilutionX)</name>
+    <path>devilution</path>
+	<extension>*.sv</extension>
+  </saveSpec>
 </saveSpecRepository>
