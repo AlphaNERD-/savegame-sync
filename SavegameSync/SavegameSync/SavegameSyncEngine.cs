@@ -425,7 +425,7 @@ namespace SavegameSync
             {
                 string sourcePath = Path.Combine(sourceDir, subPath);
                 string destPath = Path.Combine(installDir, subPath);
-                FileUtils.DeleteIfExists(destPath);
+                FileUtils.DeleteIfExists(destPath, saveSpec.FileExtensions);
                 if (Directory.Exists(sourcePath))
                 {
                     FileUtils.CopyDirectory(sourcePath, destPath, saveSpec.FileExtensions);

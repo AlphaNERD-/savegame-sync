@@ -17,25 +17,7 @@ namespace SavegameSync
                 Directory.CreateDirectory(destDir);
             }
 
-            string searchPattern = "";
-            if (filter != null)
-            {
-                foreach (string s in filter)
-                {
-                    if (s.StartsWith("."))
-                        searchPattern += "*" + s;
-                    else
-                        searchPattern += s;
-
-                    searchPattern += "|";
-                }
-
-                searchPattern = searchPattern.Trim('|');
-            }
-            else
-            {
-                searchPattern = "*.*";
-            }
+            string searchPattern = ProcessFilter(filter);
 
             FileInfo[] files = dirInfo.GetFiles(searchPattern);
             foreach (FileInfo file in files)
@@ -60,25 +42,7 @@ namespace SavegameSync
             DirectoryInfo dirInfo = new DirectoryInfo(dir);
             DateTime latestFileWriteTime = new DateTime(1900, 1, 1);
 
-            string searchPattern = "";
-            if (filter != null)
-            {
-                foreach (string s in filter)
-                {
-                    if (s.StartsWith("."))
-                        searchPattern += "*" + s;
-                    else
-                        searchPattern += s;
-
-                    searchPattern += "|";
-                }
-
-                searchPattern = searchPattern.Trim('|');
-            }
-            else
-            {
-                searchPattern = "*.*";
-            }
+            string searchPattern = ProcessFilter(filter);
 
             FileInfo[] files = dirInfo.GetFiles(searchPattern);
             foreach (FileInfo file in files)
@@ -103,7 +67,7 @@ namespace SavegameSync
             return latestFileWriteTime;
         }
 
-        public static void DeleteIfExists(string path)
+        public static void DeleteIfExists(string path, string[] filter = null)
         {
             if (File.Exists(path))
             {
@@ -111,8 +75,48 @@ namespace SavegameSync
             }
             else if (Directory.Exists(path))
             {
-                Directory.Delete(path, true);
+                if (filter == null)
+                {
+                    Directory.Delete(path, true);
+                }
+                else
+                {
+                    string searchPattern = ProcessFilter(filter);
+
+                    string[] filesToDelete = Directory.EnumerateFiles(path, searchPattern).ToArray();
+
+                    foreach (string file in filesToDelete)
+                    {
+                        File.Delete(file);
+                    }
+                }
             }
+        }
+
+        private static string ProcessFilter(string[] filter)
+        {
+            string searchPattern = "";
+
+            if (filter != null)
+            {
+                foreach (string s in filter)
+                {
+                    if (s.StartsWith("."))
+                        searchPattern += "*" + s;
+                    else
+                        searchPattern += s;
+
+                    searchPattern += "|";
+                }
+
+                searchPattern = searchPattern.Trim('|');
+            }
+            else
+            {
+                searchPattern = "*.*";
+            }
+
+            return searchPattern;
         }
     }
 }
